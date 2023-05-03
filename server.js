@@ -113,7 +113,7 @@ const sql = 'SELECT * FROM mydb.Enrollment e JOIN mydb.Course c ON e.course_ID =
 })
 
 // Get user by ID
-app.get('api/:id', (req, res) => {
+app.get('/api/:id', (req, res) => {
   const { id } = req.params;
   const sql = 'SELECT * FROM mydb.Student WHERE student_ID = ?';
   connection.query(sql, [id], (err, results) => {
