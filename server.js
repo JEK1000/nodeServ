@@ -8,7 +8,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'jkildare',
+  origin: 'jkildare.com',
   credentials: true
 }));
 
