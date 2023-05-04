@@ -15,8 +15,8 @@ app.use(cors({
 
 const connection = mysql.createConnection({
   host: '173.254.104.55',
-  user: 'jkildare_user',
-  password: '134Jaden!',
+  user: 'jkildare_super',
+  password: 'J01238525!,
   database: 'jkildare_mydb'
 });
 
