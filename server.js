@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
-require('dotenv').config();
+//require('dotenv').config();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
