@@ -14,11 +14,11 @@ app.use(cors({
 }));
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'kildje88',
-  database: 'mydb',
-  port: '3306'
+  host: '173.254.104.55',
+  port: '3306',
+  user: 'jkildare_super',
+  password: 'J01238525!',
+  database: 'jkildare_mydb',
 });
 
 connection.connect((err) => {
