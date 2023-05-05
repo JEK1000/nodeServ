@@ -9,8 +9,10 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'jkildare.com',
-  credentials: true
+  origin: '173.254.104.55',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }));
 
 const connection = mysql.createConnection({
