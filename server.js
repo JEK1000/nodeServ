@@ -43,7 +43,7 @@ app.post('/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
-  const sql = 'SELECT student_ID, email, password FROM jkildare_mydb.Student WHERE email = ? AND password = ?';
+  const sql = 'SELECT student_ID, email, password FROM mydb.Student WHERE email = ? AND password = ?';
   connection.query(sql, [ FormData.email, FormData.password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
@@ -116,7 +116,7 @@ const sql = 'SELECT * FROM mydb.Enrollment e JOIN mydb.Course c ON e.course_ID =
 // Get user by ID
 app.get('/api/:id', (req, res) => {
   const { id } = req.params;
-  const sql = 'SELECT * FROM jkildare_mydb.Student WHERE student_ID = ?';
+  const sql = 'SELECT * FROM mydb.Student WHERE student_ID = ?';
   connection.query(sql, [id], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
