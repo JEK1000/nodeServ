@@ -15,7 +15,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.options('*', cors());
+//app.options('*', cors());
 
 const connection = mysql.createConnection({
   host: '3.141.26.51',
