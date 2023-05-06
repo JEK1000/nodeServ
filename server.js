@@ -43,7 +43,7 @@ app.listen(PORT, () => {
 
 
 // login match
-app.post('/stud', (req, res) => {
+app.post('/student_registration/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
@@ -118,7 +118,7 @@ const sql = 'SELECT * FROM mydb.Enrollment e JOIN mydb.Course c ON e.course_ID =
 })
 
 // Get user by ID
-app.get('/api/:id', (req, res) => {
+app.get('/student_registration/api/:id', (req, res) => {
   const { id } = req.params;
   const sql = 'SELECT * FROM mydb.Student WHERE student_ID = ?';
   connection.query(sql, [id], (err, results) => {
