@@ -36,7 +36,7 @@ app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
 
-const PORT = 3000;
+const PORT = 443;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
