@@ -13,10 +13,10 @@ app.use(cors({
 }));
 
 const connection = mysql.createConnection({
-  host: REACT_APP_HOST,
-  user: REACT_APP_USER,
-  password: REACT_APP_PW,
-  database: REACT_APP_DB,
+  host: process.env.REACT_APP_HOST,
+  user: process.env.REACT_APP_USER,
+  password: process.env.REACT_APP_PW,
+  database: process.env.REACT_APP_DB,
 });
 
 connection.connect((err) => {
@@ -31,7 +31,7 @@ app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
 
-const PORT = REACT_APP_PORT || 3000;
+const PORT = process.env.REACT_APP_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
