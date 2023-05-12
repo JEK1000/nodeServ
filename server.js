@@ -4,24 +4,19 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
-//require('dotenv').config();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'https://student.jkildare.com',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  origin: REACT_APP_HOST,
+  credentials: true
 }));
 
-//app.options('*', cors());
-
 const connection = mysql.createConnection({
-  host: '3.15.42.129',
-  user: 'jason',
-  password: 'Jaden0102!',
-  database: 'mydb'
+  host: REACT_APP_HOST,
+  user: REACT_APP_USER,
+  password: REACT_APP_PW,
+  database: REACT_APP_DB,
 });
 
 connection.connect((err) => {
@@ -36,7 +31,7 @@ app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
 
-const PORT = 3000;
+const PORT = REACT_APP_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
@@ -47,7 +42,7 @@ app.post('/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
-  const sql = 'SELECT student_ID, email, password FROM mydb.Student WHERE email = ? AND password = ?';
+  const sql = 'SELECT  student_ID, email, password FROM mydb.Student WHERE email = ? AND password = ?';
   connection.query(sql, [ FormData.email, FormData.password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
@@ -118,7 +113,7 @@ const sql = 'SELECT * FROM mydb.Enrollment e JOIN mydb.Course c ON e.course_ID =
 })
 
 // Get user by ID
-app.get('/student_registration/api/:id', (req, res) => {
+app.get('/api/:id', (req, res) => {
   const { id } = req.params;
   const sql = 'SELECT * FROM mydb.Student WHERE student_ID = ?';
   connection.query(sql, [id], (err, results) => {
