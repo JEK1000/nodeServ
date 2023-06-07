@@ -8,24 +8,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 
-const connection = mysql.createConnection({
-  host: process.env.HOST,
-  user: process.env.DB_USER,
-  password: process.env.PW,
-  database: process.env.DB,
-  port: process.env.MYSQLPORT
-});
-
-console.log(process.env.DB_USER);
-
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-  } else {
-    console.log('Connected to database!');
-  }
-});
-
 app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
