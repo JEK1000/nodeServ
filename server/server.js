@@ -13,10 +13,10 @@ console.log(process.env);
 
 
 const connection = mysql.createConnection({
-  host: process.env.HOST,
-  user: process.env.DB_USER,
-  password: process.env.PW,
-  database: process.env.DB
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE
 });
 
 connection.connect((err) => {
@@ -31,8 +31,8 @@ app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const PORT = process.env.MYSQLPORT || 3000;
+app.listen(PORT, "0.0.0.0" () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
