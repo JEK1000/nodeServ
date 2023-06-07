@@ -7,6 +7,15 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
+const mysql = require('mysql');
+
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  host: process.env.HOST,
+  user: process.env.DB_USER,
+  password: process.env.PW,
+  database: process.env.DB,
+});
 
 app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
@@ -23,8 +32,8 @@ app.post('/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
-  const sql = 'SELECT  student_ID, email, password FROM railway.Student WHERE email = ? AND password = ?';
-  connection.query(sql, [ FormData.email, FormData.password], (err, results) => {
+  const sql = 'SELECT  student_ID, email, password FROM Student WHERE email = ? AND password = ?';
+  pool.query(sql, [ FormData.email, FormData.password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
