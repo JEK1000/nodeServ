@@ -7,13 +7,6 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-app.use(cors({
-  origin: 'https://studentregistration-production.up.railway.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-}));
-
 app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
