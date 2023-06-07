@@ -28,7 +28,7 @@ connection.connect((err) => {
 });
 
 app.get("/", (req,res)=>{
-  res.json("Hello from backend!");
+  console.log("Hello from backend!");
 });
 
 const PORT = process.env.PORT || 3000;
