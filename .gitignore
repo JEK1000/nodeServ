@@ -1,6 +1,2 @@
 /node_modules
-MYSQLPORT=7068
-MYSQLHOST=containers-us-west-131.railway.app
-MYSQLUSER=root
-MYSQLPASSWORD=akHj6zhIEvRMgFWxcPKi
-MYSQLDATABASE=railway
+.env
