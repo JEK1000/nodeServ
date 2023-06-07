@@ -10,7 +10,6 @@ app.use(cors());
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
   host: process.env.HOST,
   user: process.env.DB_USER,
   password: process.env.PW,
@@ -32,7 +31,7 @@ app.post('/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
-  const sql = 'SELECT student_ID, email, password FROM railway.Student WHERE email = ? AND password = ?';
+  const sql = 'SELECT studentID, email, password FROM railway.student WHERE email = ? AND password = ?';
   pool.query(sql, [ FormData.email, FormData.password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
