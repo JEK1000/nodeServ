@@ -9,6 +9,13 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 
+const connection = mysql.createConnection({
+  host: process.env.HOST,
+  user: process.env.DB_USER,
+  password: process.env.PW,
+  database: process.env.DB
+});
+
 console.log(process.env.DB_USER);
 
 connection.connect((err) => {
