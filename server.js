@@ -8,6 +8,14 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://studentregistration-production.up.railway.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
