@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const login = async (FormData) => {
   try {
-    const response = await axios.post('https://nodeserv-production.up.railway.app/railway/stud', { 
+    const response = await axios.post('https://nodeserv-production.up.railway.app/stud', { 
       FormData
     },{ withCredentials: true });
     return response.data;
