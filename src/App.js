@@ -21,7 +21,7 @@ function App() {
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://containers-us-west-131.railway.app/student/api/${studentID}`);
+        const response = await axios.get(`https://0.0.0.0/api/${studentID}`);
          setUserName(response.data[0].first_name);
          console.log(response.data[0].first_name);
       } catch (error) {
@@ -37,7 +37,7 @@ function App() {
     if (result) {
       // Delete account logic here
       console.log("Account deleted");
-      axios.delete(`https://containers-us-west-131.railway.app/student_registration/delete/${studentID}`)
+      axios.delete(`https://0.0.0.0/delete/${studentID}`)
           .then(response => {
               console.log(response);
        });
