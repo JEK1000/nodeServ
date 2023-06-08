@@ -27,7 +27,7 @@ app.listen(PORT, () => {
 
 
 // login match
-app.post('/stud', (req, res) => {
+app.get('/stud', (req, res) => {
   const user_Id = req.cookies.user_id;
   const { FormData } = req.body;
   console.log(FormData);
