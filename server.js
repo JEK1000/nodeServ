@@ -16,6 +16,10 @@ const pool = mysql.createPool({
   database: process.env.DB,
 });
 
+pool.on('connect', () => {
+  console.log('Connected to the database');
+});
+
 app.get("/test", (req,res)=>{
   res.json("Hello from backend!");
 });
