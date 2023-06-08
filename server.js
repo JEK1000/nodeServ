@@ -30,14 +30,14 @@ app.listen(PORT, () => {
 app.post("/stud", (req, res) => {
   const user_Id = req.cookies.user_id;
   const { email, password } = req.body;
-  const sql = 'SELECT studentID, email, password FROM student WHERE email = ? AND password = ?';
+  const sql = 'SELECT student_ID, email, password FROM Student WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
     } else {
       if (results.length > 0){
-         res.cookie('user_id', JSON.stringify(results[0].studentID),{ httpOnly: false });
+         res.cookie('user_id', JSON.stringify(results[0].student_ID),{ httpOnly: false });
          console.log("user_id cookie:", req.cookies.user_id);
          res.send(true);
       }
@@ -50,8 +50,8 @@ app.post("/stud", (req, res) => {
 
 // Get all courses
 app.get('/dashboard', (req, res) => {
-  const sql = 'SELECT * FROM course';
-  connection.query(sql, (err, results) => {
+  const sql = 'SELECT * FROM Course';
+  pool.query(sql, (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
@@ -67,14 +67,14 @@ app.post('/api/enroll/:id/:courseID', (req, res) => {
   const grade = 'Graded';
   const status = 'Enrolled';
   const { id, courseID } = req.params;
-  const sql2 = 'INSERT INTO schedule (fk_studentID,fk_course_ID) VALUES (?, ?)';
-  const sql = 'INSERT INTO enrollment (studentID, courseID, grade, status) VALUES (?, ?, ?, ?)';
-  connection.query(sql, [id, courseID, grade, status], (err, results1) => {
+  const sql2 = 'INSERT INTO Schedule (fk_student_ID,fk_course_ID) VALUES (?, ?)';
+  const sql = 'INSERT INTO Enrollment (student_ID, courseID, grade, status) VALUES (?, ?, ?, ?)';
+  pool.query(sql, [id, courseID, grade, status], (err, results1) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
     } else {
-      connection.query(sql2, [id, courseID], (err, results2) => {
+      pool.query(sql2, [id, courseID], (err, results2) => {
         if (err) {
           console.error('Error executing query:', err);
           res.status(500).send('Error executing query');
@@ -89,8 +89,8 @@ app.post('/api/enroll/:id/:courseID', (req, res) => {
 // Get enrollment
 app.get('/api/enrollment/:id', (req, res) => {
 const {id} = req.params;
-const sql = 'SELECT * FROM enrollment e JOIN course c ON e.course_ID = c.course_ID WHERE e.studentID = ?';
-  connection.query(sql,[id], (err, results1) => {
+const sql = 'SELECT * FROM Enrollment e JOIN Course c ON e.course_ID = c.course_ID WHERE e.student_ID = ?';
+  pool.query(sql,[id], (err, results1) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
@@ -103,7 +103,7 @@ const sql = 'SELECT * FROM enrollment e JOIN course c ON e.course_ID = c.course_
 // Get user by ID
 app.get('/api/:id', (req, res) => {
   const { id } = req.params;
-  const sql = 'SELECT * FROM student WHERE studentID = ?';
+  const sql = 'SELECT * FROM Student WHERE student_ID = ?';
   pool.query(sql, [id], (err, results) => {
     if (err) {
       console.error('Error executing query:', err.message);
@@ -117,21 +117,21 @@ app.get('/api/:id', (req, res) => {
 // unenroll course
 app.delete('/api/unenroll/:id/:courseID', (req, res) => {
   const { id, courseID } = req.params;
-  const sql = 'SELECT * FROM enrollment WHERE studentID = ? AND courseID = ?';
-  const sql3 = 'DELETE FROM schedule WHERE fk_studentID = ? AND fk_courseID = ?';
-  const sql2 = 'DELETE FROM enrollment WHERE enrollmentID = ?';
-  connection.query(sql, [id, courseID], (err, results1) => {
+  const sql = 'SELECT * FROM Enrollment WHERE student_ID = ? AND courseID = ?';
+  const sql3 = 'DELETE FROM Schedule WHERE fk_student_ID = ? AND fk_courseID = ?';
+  const sql2 = 'DELETE FROM Enrollment WHERE enrollment_ID = ?';
+  pool.query(sql, [id, courseID], (err, results1) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
     } else {
-      const enrollmentID = results1[0].enrollmentID;
-      connection.query(sql3, [id, courseID], (err, results2) => {
+      const enrollmentID = results1[0].enrollment_ID;
+      pool.query(sql3, [id, courseID], (err, results2) => {
         if (err) {
           console.error('Error executing query:', err);
           res.status(500).send('Error executing query');
         } else {
-          connection.query(sql2, [enrollmentID], (err, results3) => {
+          pool.query(sql2, [enrollmentID], (err, results3) => {
             if (err) {
               console.error('Error executing query:', err);
               res.status(500).send('Error executing query');
@@ -149,9 +149,9 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
 
 // Create new user
 app.post('/api/register', (req, res) => {
-  const { email,fname,lname,address,pnumber,dob, password } = req.body;
+  const { email, fname,lname, address, pnumber, dob, password } = req.body;
   const sql = 'SELECT * FROM student WHERE email = ?';
-  connection.query(sql, [ email ], (err, results) => {
+  pool.query(sql, [ email ], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
@@ -161,8 +161,8 @@ app.post('/api/register', (req, res) => {
          res.send("User already exists!");
     }
     if (results.length < 1){
-          const sql2 = 'INSERT INTO student (firstName, lastName, address, phoneNumber, email, dateOfBirth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          connection.query(sql2, [fname, lname, address, pnumber, email, dob, password], (err, results) => {
+          const sql2 = 'INSERT INTO student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          pool.query(sql2, [fname, lname, address, pnumber, email, dob, password], (err, results) => {
             if (err) {
               console.error('Error executing query:', err);
               res.status(500).send('Error executing query');
@@ -178,8 +178,8 @@ app.post('/api/register', (req, res) => {
 app.put('/api/update_user/:id', (req, res) => {
   const { fname, lname, address, pnumber, email, dob, password } = req.body;  
   const { id } = req.params;
-  const sql = 'UPDATE student SET firstName = ?, lastName = ?, address = ?, phoneNumber = ?, email = ?, dateOfBirth = ?, password = ? WHERE studentID = ?';
-  connection.query(sql, [fname, lname, address, pnumber, email, dob, password, id], (err, result) => {
+  const sql = 'UPDATE Student SET first_name = ?, last_name = ?, address = ?, phone_number = ?, email = ?, date_of_birth = ?, password = ? WHERE student_ID = ?';
+  pool.query(sql, [fname, lname, address, pnumber, email, dob, password, id], (err, result) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
@@ -192,8 +192,8 @@ app.put('/api/update_user/:id', (req, res) => {
 // Delete User
 app.delete('/delete/:id', (req, res) => {
   const { id } = req.params;
-  const sql = 'DELETE FROM student WHERE studentID = ?';
-  connection.query(sql, [id], (err, result) => {
+  const sql = 'DELETE FROM Student WHERE student_ID = ?';
+  pool.query(sql, [id], (err, result) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
