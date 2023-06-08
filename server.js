@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors());
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const pool = mysql.createPool({
   host: process.env.HOST,
