@@ -36,9 +36,8 @@ app.post("/stud", (req, res) => {
       res.status(500).send('Error executing query');
     } else {
       if (results.length > 0){
-         const userId = results[0].student_ID;
-         res.cookie('user_id', JSON.stringify(userId), { httpOnly: false });
-         console.log("user_id cookie:", userId);
+         res.cookie('user_id', JSON.stringify(results[0].student_ID),{ httpOnly: false });
+         console.log("user_id cookie:", req.cookies.user_id);
          res.send(true);
       }
       else{
