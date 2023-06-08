@@ -28,7 +28,6 @@ app.listen(PORT, () => {
 
 // login match
 app.post("/stud", (req, res) => {
-  const user_Id = req.cookies.user_id;
   const { email, password } = req.body;
   const sql = 'SELECT student_ID, email, password FROM Student WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, results) => {
@@ -37,8 +36,9 @@ app.post("/stud", (req, res) => {
       res.status(500).send('Error executing query');
     } else {
       if (results.length > 0){
-         res.cookie('user_id', JSON.stringify(results[0].student_ID),{ httpOnly: false });
-         console.log("user_id cookie:", req.cookies.user_id);
+         const userId = results[0].student_ID;
+         res.cookie('user_id', JSON.stringify(userId), { httpOnly: false });
+         console.log("user_id cookie:", userId);
          res.send(true);
       }
       else{
