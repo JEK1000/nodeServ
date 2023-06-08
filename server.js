@@ -37,6 +37,7 @@ app.post("/stud", (req, res) => {
     } else {
       if (results.length > 0){
          res.cookie('user_id', JSON.stringify(results[0].student_ID),{ httpOnly: false });
+         console.log('user_id cookie: ', results[0].student_ID);
          console.log("user_id cookie:", req.cookies.user_id);
          res.send(true);
       }
