@@ -107,7 +107,7 @@ app.get('/api/:id', (req, res) => {
   const sql = 'SELECT * FROM student WHERE studentID = ?';
   pool.query(sql, [id], (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
+      console.error('Error executing query:', err.message);
       res.status(500).send('Error executing query');
     } else {
       res.send(results);
