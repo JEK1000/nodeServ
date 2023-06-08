@@ -34,10 +34,9 @@ app.listen(PORT, () => {
 // login match
 app.post("/stud", (req, res) => {
   const user_Id = req.cookies.user_id;
-  const { FormData } = req.body;
-  console.log(FormData);
+  const { email, password } = req.body;
   const sql = 'SELECT studentID, email, password FROM student WHERE email = ? AND password = ?';
-  pool.query(sql, [ FormData.email, FormData.password], (err, results) => {
+  pool.query(sql, [ email, password], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
