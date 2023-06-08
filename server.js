@@ -68,7 +68,7 @@ app.post('/api/enroll/:id/:courseID', (req, res) => {
   const status = 'Enrolled';
   const { id, courseID } = req.params;
   const sql2 = 'INSERT INTO Schedule (fk_student_ID,fk_course_ID) VALUES (?, ?)';
-  const sql = 'INSERT INTO Enrollment (student_ID, courseID, grade, status) VALUES (?, ?, ?, ?)';
+  const sql = 'INSERT INTO Enrollment (student_ID, course_ID, grade, status) VALUES (?, ?, ?, ?)';
   pool.query(sql, [id, courseID, grade, status], (err, results1) => {
     if (err) {
       console.error('Error executing query:', err);
