@@ -104,8 +104,8 @@ const sql = 'SELECT * FROM mydb.Enrollment e JOIN mydb.Course c ON e.course_ID =
 // Get user by ID
 app.get('/api/:id', (req, res) => {
   const { id } = req.params;
-  const sql = 'SELECT * FROM mydb.Student WHERE student_ID = ?';
-  connection.query(sql, [id], (err, results) => {
+  const sql = 'SELECT * FROM student WHERE studentID = ?';
+  pool.query(sql, [id], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
