@@ -124,31 +124,37 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
   const sql = 'SELECT * FROM Enrollment WHERE student_ID = ? AND course_ID = ?';
   const sql3 = 'DELETE FROM Schedule WHERE fk_student_ID = ? AND fk_course_ID = ?';
   const sql2 = 'DELETE FROM Enrollment WHERE enrollment_ID = ?';
+
   pool.query(sql, [id, courseID], (err, results1) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
     } else {
-      const enrollmentID = results1[0].enrollment_ID;
-      pool.query(sql3, [id, courseID], (err, results2) => {
-        if (err) {
-          console.error('Error executing query:', err);
-          res.status(500).send('Error executing query');
-        } else {
-          pool.query(sql2, [enrollmentID], (err, results3) => {
-            if (err) {
-              console.error('Error executing query:', err);
-              res.status(500).send('Error executing query');
-            } else {
-              //console.log(results3);
-              res.send(results3);
-            }
-          })
-        }
-      })
+      if (results1.length === 0) {
+        res.status(404).send('Enrollment not found');
+      } else {
+        const enrollmentID = results1[0].enrollment_ID;
+
+        pool.query(sql3, [id, courseID], (err, results2) => {
+          if (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Error executing query');
+          } else {
+            pool.query(sql2, [enrollmentID], (err, results3) => {
+              if (err) {
+                console.error('Error executing query:', err);
+                res.status(500).send('Error executing query');
+              } else {
+                res.send(results3);
+              }
+            })
+          }
+        })
+      }
     }
   })
 })
+
 
 
 // Create new user
