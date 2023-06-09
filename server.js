@@ -159,28 +159,28 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
 
 // Create new user
 app.post('/api/register', (req, res) => {
-  const { fname, lname, address, pnumber, email, dob, password } = req.body;
+  const { FormData } = req.body;
   const sql = 'SELECT * FROM Student WHERE email = ?';
-  
-  pool.query(sql, [email], (err, selectResults) => {
+  connection.query(sql, [ FormData.email ], (err, results) => {
     if (err) {
-      console.error('Error executing query:', err.message);
+      console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
-    } else if (selectResults.length > 0) {
-      console.log("User exists!");
-      res.send("User already exists!");
-    } else {
-      const insertSql = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      
-      pool.query(insertSql, [fname, lname, address, pnumber, email, dob, password], (insertErr, insertResults) => {
-        if (insertErr) {
-          console.error('Error executing query:', insertErr.message);
-          res.status(500).send('Error executing query');
-        } else {
-          res.send("Account created!");
-        }
-      });
     }
+    if (results.length > 0){
+         console.log("User exists!");
+         res.send("User already exists!");
+    }
+    if (results.length < 1){
+          const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          connection.query(sql2, [FormData.fname, FormData.lname, FormData.address, FormData.pnumber, FormData.email, FormData.dob, FormData.password], (err, results) => {
+            if (err) {
+              console.error('Error executing query:', err);
+              res.status(500).send('Error executing query');
+            } else {
+              res.send("Account created!");
+            }
+        });
+     }
   });
 });
 
