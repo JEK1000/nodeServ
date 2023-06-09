@@ -163,7 +163,7 @@ app.post('/api/register', (req, res) => {
   const sql = 'SELECT * FROM Student WHERE email = ?';
   pool.query(sql, [ email ], (err, results) => {
     if (err) {
-      console.error('Error executing query:', err);
+      console.error('Error executing query:', err.message);
       res.status(500).send('Error executing query');
     }
     if (results.length > 0){
@@ -174,7 +174,7 @@ app.post('/api/register', (req, res) => {
           const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
           pool.query(sql2, [fname, lname, address, pnumber, email, dob, password], (err, results) => {
             if (err) {
-              console.error('Error executing query:', err);
+              console.error('Error executing query:', err.message);
               res.status(500).send('Error executing query');
             } else {
               res.send("Account created!");
