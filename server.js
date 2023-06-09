@@ -161,7 +161,7 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
 app.post('/api/register', (req, res) => {
   const { FormData } = req.body;
   const sql = 'SELECT * FROM Student WHERE email = ?';
-  connection.query(sql, [ FormData.email ], (err, results) => {
+  pool.query(sql, [ FormData.email ], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
@@ -172,7 +172,7 @@ app.post('/api/register', (req, res) => {
     }
     if (results.length < 1){
           const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          connection.query(sql2, [FormData.fname, FormData.lname, FormData.address, FormData.pnumber, FormData.email, FormData.dob, FormData.password], (err, results) => {
+          pool.query(sql2, [FormData.fname, FormData.lname, FormData.address, FormData.pnumber, FormData.email, FormData.dob, FormData.password], (err, results) => {
             if (err) {
               console.error('Error executing query:', err);
               res.status(500).send('Error executing query');
