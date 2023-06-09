@@ -122,7 +122,7 @@ app.get('/api/:id', (req, res) => {
 app.delete('/api/unenroll/:id/:courseID', (req, res) => {
   const { id, courseID } = req.params;
   const sql = 'SELECT * FROM Enrollment WHERE student_ID = ? AND course_ID = ?';
-  const sql3 = 'DELETE FROM Schedule WHERE fk_student_ID = ? AND fk_courseID = ?';
+  const sql3 = 'DELETE FROM Schedule WHERE student_ID = ? AND courseID = ?';
   const sql2 = 'DELETE FROM Enrollment WHERE enrollment_ID = ?';
   pool.query(sql, [id, courseID], (err, results1) => {
     if (err) {
