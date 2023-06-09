@@ -7,7 +7,8 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://studentregistration-production.up.railway.app'
+  origin: 'https://studentregistration-production.up.railway.app',
+  credentials: true // Allow credentials (cookies)
 }));
 
 const mysql = require('mysql2');
