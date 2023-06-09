@@ -160,7 +160,7 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
 // Create new user
 app.post('/api/register', (req, res) => {
   const { email, fname,lname, address, pnumber, dob, password } = req.body;
-  const sql = 'SELECT * FROM student WHERE email = ?';
+  const sql = 'SELECT * FROM Student WHERE email = ?';
   pool.query(sql, [ email ], (err, results) => {
     if (err) {
       console.error('Error executing query:', err);
@@ -171,7 +171,7 @@ app.post('/api/register', (req, res) => {
          res.send("User already exists!");
     }
     if (results.length < 1){
-          const sql2 = 'INSERT INTO student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
           pool.query(sql2, [fname, lname, address, pnumber, email, dob, password], (err, results) => {
             if (err) {
               console.error('Error executing query:', err);
