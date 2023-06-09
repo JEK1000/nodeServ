@@ -6,7 +6,10 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://studentregistration-production.up.railway.app'
+}));
+
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
