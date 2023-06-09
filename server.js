@@ -159,7 +159,7 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
 
 // Create new user
 app.post('/api/register', (req, res) => {
-  const { email, fname,lname, address, pnumber, dob, password } = req.body;
+  const { fname,lname, address, pnumber, email, dob, password } = req.body;
   const sql = 'SELECT * FROM Student WHERE email = ?';
   pool.query(sql, [ email ], (err, results) => {
     if (err) {
