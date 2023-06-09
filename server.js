@@ -170,7 +170,7 @@ app.post('/api/register', (req, res) => {
          console.log("User exists!");
          res.send("User already exists!");
     }
-    if (results.length < 1){
+    else {
           const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
           pool.query(sql2, [fname, lname, address, pnumber, email, dob, password], (err, results) => {
             if (err) {
