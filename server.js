@@ -32,7 +32,7 @@ app.listen(PORT, () => {
 });
 
 // login match
-app.post("/stud", (req, res) => {
+app.post("/student", (req, res) => {
   const { email, password } = req.body;
   const sql = 'SELECT student_ID, email, password FROM Student WHERE email = ? AND password = ?';
   pool.query(sql, [email, password], (err, results) => {
