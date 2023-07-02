@@ -42,7 +42,7 @@ app.post("/stud", (req, res) => {
     } else {
       if (results.length > 0){
         const userId = results[0].student_ID;
-        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, domain: '.up.railway.app', path: '/' });
+        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, domain: 'https://www.jkildare.com', path: '/' });
         console.log("user_id cookie server side: ", userId);
         res.send(true);
       }
