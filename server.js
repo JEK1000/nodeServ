@@ -156,8 +156,6 @@ app.delete('/api/unenroll/:id/:courseID', (req, res) => {
   })
 })
 
-
-
 // Create new user
 app.post('/api/register', (req, res) => {
   const { FormData } = req.body;
@@ -172,8 +170,8 @@ app.post('/api/register', (req, res) => {
          res.send("User already exists!");
     }
     if (results.length < 1){
-          const sql2 = 'INSERT INTO Student (first_name, last_name, address, phone_number, email, date_of_birth, password) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          pool.query(sql2, [FormData.fname, FormData.lname, FormData.address, FormData.pnumber, FormData.email, FormData.dob, FormData.password], (err, results) => {
+          const sql2 = 'INSERT INTO Student (first_name, email, password) VALUES (?, ?, ?)';
+          pool.query(sql2, [FormData.fname, FormData.email, FormData.password], (err, results) => {
             if (err) {
               console.error('Error executing query:', err);
               res.status(500).send('Error executing query');
@@ -188,10 +186,10 @@ app.post('/api/register', (req, res) => {
 
 // Update User
 app.put('/api/update_user/:id', (req, res) => {
-  const { fname, lname, address, pnumber, email, dob, password } = req.body;  
+  const { fname, email, password } = req.body;  
   const { id } = req.params;
-  const sql = 'UPDATE Student SET first_name = ?, last_name = ?, address = ?, phone_number = ?, email = ?, date_of_birth = ?, password = ? WHERE student_ID = ?';
-  pool.query(sql, [fname, lname, address, pnumber, email, dob, password, id], (err, result) => {
+  const sql = 'UPDATE Student SET first_name = ?, email = ?, password = ? WHERE student_ID = ?';
+  pool.query(sql, [fname, email, password, id], (err, result) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).send('Error executing query');
