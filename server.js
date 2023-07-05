@@ -6,18 +6,11 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
-// app.use(cors({
-//   origin: 'https://jkildare.com',
-//   //https://studentregistration-production.up.railway.app
-//   credentials: true // Allow credentials (cookies)
-// }));
+app.use(cors({
+  origin: 'https://jkildare.com',
+  credentials: true // Allow credentials (cookies)
+}));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://jkildare.com"); // Replace with your client's domain
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
