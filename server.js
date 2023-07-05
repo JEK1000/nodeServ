@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://jkildare.com/student',
+  origin: 'https://jkildare.com',
   credentials: true // Allow credentials (cookies)
 }));
 
