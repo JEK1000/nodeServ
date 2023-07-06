@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://jkildare.com',
+  origin: 'https://nodeserv-production.up.railway.app',
   credentials: true // Allow credentials (cookies)
 }));
 
