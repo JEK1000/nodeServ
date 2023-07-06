@@ -41,7 +41,7 @@ app.post("/stud", (req, res) => {
     } else {
       if (results.length > 0){
         const userId = results[0].student_ID;
-        res.cookie('user_id', JSON.stringify(userId), { httpOnly: true, domain: '.up.railway.app' });
+        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false });
         res.send(true);
       }
       else{
