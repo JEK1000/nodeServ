@@ -7,9 +7,16 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://jkildare.com/student',
+  origin: 'https://jkildare.com',
   credentials: true // Allow credentials (cookies)
 }));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", req.headers.origin); // Set the origin dynamically
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const mysql = require('mysql2');
 
