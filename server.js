@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://nodeserv-production.up.railway.app',
+  origin: 'https://jkildare.com',
   credentials: true // Allow credentials (cookies)
 }));
 
@@ -43,7 +43,7 @@ app.post("/stud", (req, res) => {
         const userId = results[0].student_ID;
         res.header('Access-Control-Allow-Origin', 'https://jkildare.com');
         res.header('Access-Control-Allow-Credentials', true);
-        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, sameSite: 'None', secure: true });
+        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, domain: '.up.railway.app', sameSite: 'None', secure: true });
         console.log("user_id cookie server side: ", userId);
         res.send(true);
       }
