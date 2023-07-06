@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'https://jkildare.com/',
+  origin: 'https://jkildare.com',
   credentials: true // Allow credentials (cookies)
 }));
 
@@ -41,7 +41,7 @@ app.post("/stud", (req, res) => {
     } else {
       if (results.length > 0){
         const userId = results[0].student_ID;
-        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, path: '/student/' });
+        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, path: 'student' });
         console.log("user_id cookie server side: ", userId);
         res.send(true);
       }
