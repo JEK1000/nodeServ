@@ -11,13 +11,6 @@ app.use(cors({
   credentials: true // Allow credentials (cookies)
 }));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", req.headers.origin); // Set the origin dynamically
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
@@ -48,7 +41,7 @@ app.post("/stud", (req, res) => {
     } else {
       if (results.length > 0){
         const userId = results[0].student_ID;
-        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, domain: 'jkildare.com', path: '/student', sameSite: 'None', secure: true });
+        res.cookie('user_id', JSON.stringify(userId), { httpOnly: false, domain: '/student' });
         console.log("user_id cookie server side: ", userId);
         res.send(true);
       }
