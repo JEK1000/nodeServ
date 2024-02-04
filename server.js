@@ -14,11 +14,11 @@ app.use(cors({
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
-  host: process.env.HOST,
-  user: process.env.DB_USER,
-  password: process.env.PW,
-  database: process.env.DB,
-  port: process.env.MYSQLPORT,
+  host: 'viaduct.proxy.rlwy.net',
+  user: 'root',
+  password: 'DDCF1ed2h45BAB6G4gEBEFbchddGhh4d',
+  database: 'railway',
+  port: '21831'
 });
 
 app.get("/test", (req,res)=>{
